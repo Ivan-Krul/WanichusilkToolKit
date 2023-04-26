@@ -26,6 +26,17 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Compacter.cpp" />
+    <ClCompile Include="src\Hardware.cpp" />
+    <ClCompile Include="src\LogMachineFile.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Compacter.h" />
+    <ClInclude Include="include\Hardware.h" />
+    <ClInclude Include="include\ILogMachine.h" />
+    <ClInclude Include="include\LogMachineFile.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -181,17 +192,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="Compacter.h" />
-    <ClInclude Include="Hardware.h" />
-    <ClInclude Include="ILogMachine.h" />
-    <ClInclude Include="LogMachineFile.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Compacter.cpp" />
-    <ClCompile Include="Hardware.cpp" />
-    <ClCompile Include="LogMachineFile.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
