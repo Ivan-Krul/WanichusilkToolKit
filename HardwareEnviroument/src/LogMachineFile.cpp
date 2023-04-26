@@ -1,4 +1,4 @@
-#include "LogMachineFile.h"
+#include "../include/LogMachineFile.h"
 
 #include <fstream>
 
