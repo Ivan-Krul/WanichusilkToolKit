@@ -6,5 +6,18 @@ namespace graphic_system_lib
 {
 	class Initializer
 	{
+	public:
+		inline static Initializer& getInstance() noexcept { return m_Instance; }
+		inline constexpr int getResult() const { return m_Result; }
+
+		static int init(bool close_instantly);
+
+	private:
+		Initializer() = default;
+		~Initializer() = default;
+
+		int m_Result;
+
+		static Initializer m_Instance;
 	};
 }
