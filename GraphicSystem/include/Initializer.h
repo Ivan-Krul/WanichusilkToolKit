@@ -14,7 +14,7 @@ namespace graphic_system_lib
 
 	private:
 		Initializer() = default;
-		~Initializer() = default;
+		~Initializer() { glfwTerminate(); };
 
 		int m_Result;
 

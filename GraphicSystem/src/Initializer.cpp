@@ -14,11 +14,13 @@ namespace graphic_system_lib
 				return res;
 			else
 			{
-				printf("GLFW initializing failed");
+				printf("GLFW initializion was failed");
 				exit(1);
 			}
 		}
 		else
 			return res;
 	}
+
+	Initializer Initializer::m_Instance;
 }
