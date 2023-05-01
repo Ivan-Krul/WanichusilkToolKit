@@ -1,6 +1,9 @@
 #pragma once
 #pragma comment(lib, "opengl32.lib")
+#include <gl/glew.h>
 #include <GLFW/glfw3.h>
+
+
 
 namespace graphic_system_lib
 {
