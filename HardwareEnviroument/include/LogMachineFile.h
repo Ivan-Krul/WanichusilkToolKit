@@ -10,15 +10,15 @@ namespace hardware_envi_lib
 	{
 	public:
 		LogMachineFile() = default;
-		inline LogMachineFile(const std::string& path, const bool need_binary) noexcept { Init(path, need_binary); }
+		inline LogMachineFile(const std::string& path, const bool need_binary) noexcept { init(path, need_binary); }
 
-		virtual void Init(const std::string& path, const bool need_binary) noexcept;
-		virtual void Log(const char* pFunction_name, const std::string& message) noexcept;
-		virtual void LogNumberx64i(const char* pFunction_name, const std::string& message, const int64_t argument) noexcept;
-		virtual void LogNumberx64f(const char* pFunction_name, const std::string& message, const double argument) noexcept;
-		virtual void LogNumberx32i(const char* pFunction_name, const std::string& message, const int32_t argument) noexcept;
-		virtual void LogNumberx32f(const char* pFunction_name, const std::string& message, const float argument) noexcept;
-		virtual void Save() noexcept;
+		virtual void init(const std::string& path, const bool need_binary) noexcept;
+		virtual void log(const char* pFunction_name, const std::string& message) noexcept;
+		virtual void logNumberx64i(const char* pFunction_name, const std::string& message, const int64_t argument) noexcept;
+		virtual void logNumberx64f(const char* pFunction_name, const std::string& message, const double argument) noexcept;
+		virtual void logNumberx32i(const char* pFunction_name, const std::string& message, const int32_t argument) noexcept;
+		virtual void logNumberx32f(const char* pFunction_name, const std::string& message, const float argument) noexcept;
+		virtual void save() noexcept;
 		virtual ~LogMachineFile() = default;
 
 	private:

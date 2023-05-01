@@ -4,7 +4,7 @@
 
 namespace hardware_envi_lib
 {
-	void LogMachineFile::Init(const std::string& path, const bool need_binary) noexcept
+	void LogMachineFile::init(const std::string& path, const bool need_binary) noexcept
 	{
 		m_NeedBinary = need_binary;
 		m_Path = path;
@@ -21,7 +21,7 @@ namespace hardware_envi_lib
 		m_Logs.push_back(init_log);
 	}
 
-	void LogMachineFile::Log(const char* pFunction_name, const std::string& message) noexcept
+	void LogMachineFile::log(const char* pFunction_name, const std::string& message) noexcept
 	{
 		std::string log;
 
@@ -31,27 +31,27 @@ namespace hardware_envi_lib
 		m_Logs.push_back(log);
 	}
 
-	void LogMachineFile::LogNumberx64i(const char* pFunction_name, const std::string& message, const int64_t argument) noexcept
+	void LogMachineFile::logNumberx64i(const char* pFunction_name, const std::string& message, const int64_t argument) noexcept
 	{
 		f_WriteAnyLogWithArgument<int64_t>(pFunction_name, message, argument);
 	}
 
-	void LogMachineFile::LogNumberx64f(const char* pFunction_name, const std::string& message, const double argument) noexcept
+	void LogMachineFile::logNumberx64f(const char* pFunction_name, const std::string& message, const double argument) noexcept
 	{
 		f_WriteAnyLogWithArgument<double>(pFunction_name, message, argument);
 	}
 
-	void LogMachineFile::LogNumberx32i(const char* pFunction_name, const std::string& message, const int32_t argument) noexcept
+	void LogMachineFile::logNumberx32i(const char* pFunction_name, const std::string& message, const int32_t argument) noexcept
 	{
 		f_WriteAnyLogWithArgument<int32_t>(pFunction_name, message, argument);
 	}
 
-	void LogMachineFile::LogNumberx32f(const char* pFunction_name, const std::string& message, const float argument) noexcept
+	void LogMachineFile::logNumberx32f(const char* pFunction_name, const std::string& message, const float argument) noexcept
 	{
 		f_WriteAnyLogWithArgument<float>(pFunction_name, message, argument);
 	}
 
-	void LogMachineFile::Save() noexcept
+	void LogMachineFile::save() noexcept
 	{
 		std::ofstream fout;
 		fout.open(m_Path);

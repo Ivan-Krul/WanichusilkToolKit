@@ -18,13 +18,26 @@ namespace hardware_envi_lib
 
 	struct IHardware
 	{
-		virtual void Write(const std::string directory) = 0;
-		virtual void Read(const std::string directory) = 0;
-		virtual void WriteAbortLine(const std::string where, const std::string message) = 0;
+		virtual void write(const std::string directory) = 0;
+		virtual void read(const std::string directory) = 0;
+		virtual void writeAbortLine(const std::string where, const std::string message) = 0;
 	};
 
 	class Hardware : public IHardware
 	{
+	public:
+		void write(const std::string directory);
+		void read(const std::string directory);
+		bool canBeFileOpen(const std::string directory);
+		Compacter& getCompacter();
+		void writeAbortLine(const std::string where, const std::string message);
+
+		// Singleton pattern
+		static Hardware& getInstance()
+		{
+			return s_Instance;
+		}
+	private:
 		const std::vector<datatype> c_DataTypes =
 		{
 			{"str_", 's', DateType::str__},
@@ -39,31 +52,19 @@ namespace hardware_envi_lib
 		};
 
 		Compacter m_Compacter;
-		
-		void f_WriteInFileSize(std::ofstream& fs, size_t size);
-		void f_WriteInFileString(std::ofstream& fs, const std::string str);
-		datatype f_FindFromDataTypes(const DateType date_type);
-		datatype f_FindFromDataTypes(const char bin);
 
-		size_t f_ReadFromFileSize(std::ifstream& fs);
-		std::string f_ReadFromFileString(std::ifstream& fs);
+		void _writeInFileSize(std::ofstream& fs, size_t size);
+		void _writeInFileString(std::ofstream& fs, const std::string str);
+		datatype _findFromDataTypes(const DateType date_type);
+		datatype _findFromDataTypes(const char bin);
+
+		size_t _readFromFileSize(std::ifstream& fs);
+		std::string _readFromFileString(std::ifstream& fs);
 
 
 		// Singleton pattern
 		static Hardware s_Instance;
 		Hardware() = default;
-	public:
-		void Write(const std::string directory);
-		void Read(const std::string directory);
-		bool CanBeFileOpen(const std::string directory);
-		Compacter& GetCompacter();
-		void WriteAbortLine(const std::string where, const std::string message);
-
-		// Singleton pattern
-		static Hardware& GetInstance()
-		{
-			return s_Instance;
-		}
 	};
 
 	// Hardware Hardware::s_Instance;

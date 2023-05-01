@@ -2,12 +2,12 @@
 
 namespace hardware_envi_lib
 {
-	void Hardware::f_WriteInFileSize(std::ofstream& fs, size_t size)
+	void Hardware::_writeInFileSize(std::ofstream& fs, size_t size)
 	{
 		fs.write(reinterpret_cast<char*>(&size), sizeof(short));
 	}
 
-	void Hardware::f_WriteInFileString(std::ofstream& fs, const std::string str)
+	void Hardware::_writeInFileString(std::ofstream& fs, const std::string str)
 	{
 		auto size = str.size();
 		fs.write(reinterpret_cast<char*>(&size), sizeof(short));
@@ -15,7 +15,7 @@ namespace hardware_envi_lib
 			fs.write(&s, 1);
 	}
 
-	size_t Hardware::f_ReadFromFileSize(std::ifstream& fs)
+	size_t Hardware::_readFromFileSize(std::ifstream& fs)
 	{
 		auto size = size_t();
 
@@ -24,7 +24,7 @@ namespace hardware_envi_lib
 		return size;
 	}
 
-	std::string Hardware::f_ReadFromFileString(std::ifstream& fs)
+	std::string Hardware::_readFromFileString(std::ifstream& fs)
 	{
 		auto size = size_t();
 		auto str = std::string();
@@ -38,13 +38,13 @@ namespace hardware_envi_lib
 		return str;
 	}
 
-	datatype Hardware::f_FindFromDataTypes(const DateType date_type)
+	datatype Hardware::_findFromDataTypes(const DateType date_type)
 	{
 		auto comp = [=](datatype datatp) { return datatp.date_type == date_type;  };
 		return *std::find_if(c_DataTypes.begin(), c_DataTypes.end(), comp);
 	}
 
-	datatype Hardware::f_FindFromDataTypes(const char bin)
+	datatype Hardware::_findFromDataTypes(const char bin)
 	{
 		auto comp = [=](datatype datatp) { return datatp.binary_value == bin; };
 		return *std::find_if(c_DataTypes.begin(), c_DataTypes.end(), comp);
@@ -68,49 +68,49 @@ Structure:
 	<-
 */
 
-	void hardware_envi_lib::Hardware::Write(const std::string directory)
+	void hardware_envi_lib::Hardware::write(const std::string directory)
 	{
 		auto writer = std::ofstream(directory, std::ios::binary | std::ios::out);
 		auto bufnum = size_t();
 
-		f_WriteInFileSize(writer, m_Compacter.size());
+		_writeInFileSize(writer, m_Compacter.size());
 
 		for (const auto& c : m_Compacter)
 		{
-			bufnum = f_FindFromDataTypes(c.date_type).binary_value;
+			bufnum = _findFromDataTypes(c.date_type).binary_value;
 
 			writer.write(reinterpret_cast<char*>(&bufnum), 1);
-			f_WriteInFileString(writer, c.name);
-			f_WriteInFileString(writer, c.binary);
+			_writeInFileString(writer, c.name);
+			_writeInFileString(writer, c.binary);
 		}
 		writer.close();
 	}
 
-	void hardware_envi_lib::Hardware::Read(const std::string directory)
+	void hardware_envi_lib::Hardware::read(const std::string directory)
 	{
-		if (!CanBeFileOpen(directory))
+		if (!canBeFileOpen(directory))
 			return;
 		auto reader = std::ifstream(directory, std::ios::binary | std::ios::in);
 		auto bufnum = size_t();
-		auto size = f_ReadFromFileSize(reader);
+		auto size = _readFromFileSize(reader);
 		auto fv = float_var();
 
-		m_Compacter.Clear();
+		m_Compacter.clear();
 
 		for (size_t c = 0; c < size; c++)
 		{
 			reader.read(reinterpret_cast<char*>(&bufnum), 1);
 
-			fv.date_type = f_FindFromDataTypes(static_cast<char>(bufnum)).date_type;
-			fv.name = f_ReadFromFileString(reader);
-			fv.binary = f_ReadFromFileString(reader);
+			fv.date_type = _findFromDataTypes(static_cast<char>(bufnum)).date_type;
+			fv.name = _readFromFileString(reader);
+			fv.binary = _readFromFileString(reader);
 
-			m_Compacter.Push(fv.date_type, fv.name, fv.binary.data());
+			m_Compacter.push(fv.date_type, fv.name, fv.binary.data());
 		}
 		reader.close();
 	}
 
-	bool Hardware::CanBeFileOpen(const std::string directory)
+	bool Hardware::canBeFileOpen(const std::string directory)
 	{
 		auto reader = std::ifstream(directory);
 		auto open = reader.is_open();
@@ -119,12 +119,12 @@ Structure:
 
 		return open;
 	}
-	Compacter& Hardware::GetCompacter()
+	Compacter& Hardware::getCompacter()
 	{
 		return m_Compacter;
 	}
 
-	void Hardware::WriteAbortLine(const std::string where, const std::string message)
+	void Hardware::writeAbortLine(const std::string where, const std::string message)
 	{
 		auto writer = std::ofstream(where);
 		
